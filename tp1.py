@@ -1,4 +1,6 @@
 # NEW MODIF
+#!/usr/local/bin/python
+# coding: latin-1
 import sys
 import re
 import numpy as np
@@ -13,40 +15,46 @@ def count_ligne(f):
 	print 'Il y a : %d jugements.' % c
 	f.seek(0)
 	return c
-def sort_jugement(f)
-	jugement = []    
-	return jugement 
-# Remplacer fichier par jugement (dont une fonction l'aura extraite au préalable de fichier et stocker dans dico)	
-def count_utilisateur(f): 
-	c = 0
-	list_user = []	
-	for line in f:		
-		jugement = line.split("|")		
-		if not jugement[0] in list_user:
-			list_user.append(jugement[0])
 	
-	print 'Il y a : ' + str(len(list_user)) + ' utilisateurs'
+def sort_jugement(f):
+	
+	jugement = []
+	for line in f:
+		new_field = line.split("|")
+		jugement.append(new_field)
+		
+	# print(jugement)
 	f.seek(0)
+	return jugement
+
+
+def count_utilisateur(jugement):
+
+	list_user = []
+	for element in jugement:
+		if not element[0] in list_user:
+			list_user.append(element[0])
+			
+
+	print 'Il y a : ' + str(len(list_user)) + ' utilisateurs'
+	#print(list_user)
 	return	list_user
 
-# Remplacer fichier par jugement (dont une fonction l'aura extraite au préalable de fichier et stocker dans dico)		
-def count_film(f):
-	c = 0
-	jugement = []
-	list_film = []	
-	for line in f:		
-		jugement = line.split("|")		
-		if not jugement[1] in list_film:
-			list_film.append(jugement[1])
+def count_film(jugement):
+
+	list_film = []
+	for element in jugement:
+		if not element[1] in list_film:
+			list_film.append(element[1])
 	
 	print 'Il y a : ' + str(len(list_film)) + ' films.'
+	#print(list_film)
 	old_young_film(list_film)
-	f.seek(0)
 	return list_film
 	
 def old_young_film(l):
 	list_date = []
-	date = []	
+	date = []
 	reg_date_exp = re.compile(r"\(([0-9])+\)")
 	for x in l:
 		list_date.append(x.split(" "))
@@ -69,31 +77,41 @@ def old_young_film(l):
 	print 'Le flim le plus recent est de : %s' % date_sup
 	return list_date
 	
-def count_note(f)
+def sort_note(jugement):
 	
-def trace_courbe(jugement): # traiter les jugements
-
-	x = np.arange(-5, 5, .01)
-	y = np.sin(2*np.pi*x)
-	plt.plot(x,y)
+	list_note = []
+	tmp_note = []
+	for element in jugement:
+		tmp_note.append(element[2][0:str.rfind(element[2],r"\d")])	
+	
+	list_note = tmp_note
+	list_note = [list_note[i].replace(",","") for i in range(len(list_note))]
+	
+	print 'Il y a : ' + str(len(list_note)) + ' notes'
+	print(list_note)
+	return list_note
+	
+def trace_courbe(var): # traiter les jugements
+	
+	y = []
+	print 'Tracer de la courbe des notes...'
+	
+	x = np.arange(0, int(len(var)))
+	y = x
+	
+	plt.plot(x,y)			
 	plt.show()
 
 	
 def Analyse(f):
 
-	jugement = []
 	# Ajouter ici sort_jugement qui extrait les jugements et stock dans jugement
 	count_ligne(f)
-	count_utilisateur(f)
-	count_film(f)
-	trace_courbe(jugement)
-
-# count_ligne(f2)		
-# count_ligne(f3)
-
-# count_film(f1)
-# count_film(f3)
-# count_film(f1)
+	jugement = sort_jugement(f)
+	count_utilisateur(jugement)
+	count_film(jugement)
+	note = sort_note(jugement)
+	trace_courbe(note)
 
 Analyse(fichier)
 
