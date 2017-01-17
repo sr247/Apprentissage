@@ -19,7 +19,7 @@ plt.show()
 
 def bin_img(imgMat, threshold):
   """
-  Faire une fonction qui récupère l'immage sous forme de matrice avec des valeur comprise  entre 0 et 1
+  Faire une fonction qui récupère l'image sous forme de matrice avec des valeurs comprises  entre 0 et 1
   Et pour toute case où si contenu > thesrhold alors contenu = 1
                         Sinon contenu = 0
   Initialisé un tableau a 0 peut réduire le nombre d'affectation
