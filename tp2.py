@@ -26,5 +26,11 @@ def bin_img(imgMat, threshold):
   """
 
 
-def 
-
+def histo_img():
+  """
+  Ici on fait un array de 28 cases qui compte combien de 1 il y à par lignes i.e les endroits ou est tracé le chiffre sur la bitmap
+  """
+def affichage():
+  for i in range(len(histogramme)-1):
+    plot.barh(i,histogramme[i])
+  plt.show()
